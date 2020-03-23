@@ -56,7 +56,7 @@ public class Controller {
     private Weapon weapon0 = new Weapon("",0); //dummy
     private Weapon weapon1 = new Weapon("knife", 5); //character.damage += 5
     private Weapon weapon2 = new Weapon("sword",10); //character.damage += 10
-    private Weapon weapon3 = new Weapon("long sword",20); //character.damage += 20
+    //private Weapon weapon3 = new Weapon("long sword",20); //character.damage += 20
 
     private UsableItem usableItem1 = new UsableItem("key",0);
     private UsableItem usableItem2 = new UsableItem("water",5); //istHP += 5
@@ -75,7 +75,7 @@ public class Controller {
     private Enemy enemy4 = new Enemy("wolf",30,usableItem3,4);
     private Enemy enemy5 = new Enemy("wolf",30,usableItem1,4);
     private Enemy enemy6 = new Enemy("lizard",5,usableItem3,10);
-    private Enemy enemy7 = new Enemy("gnome",100,weapon3,100); //move on if gems
+    private Enemy enemy7 = new Enemy("gnome",100,item0,100); //move on if gems //weapon3
 
     private Doors doors1 = new Doors(true, false, false, false, 2, 0, 0, 0);
     private Doors doors2 = new Doors(true, false, false, true, 3, 0, 0, 1);
@@ -109,7 +109,7 @@ public class Controller {
     private Room room13 = new Room(13,"plugged in a human skull finding a sapphire.\n",false, doors13, enemy0, item2);
     private Room room14 = new Room(14,"just as needed some more food.\nsomehow looks like already eaten before.\n",false, doors14, enemy0, usableItem4);
     private Room room15 = new Room(15,"ugly gnome blocking the way.\nclueless which language he's speaking\nbut it looks like he wants something.\n",true, doors15, enemy7, item0);
-    private Room room16 = new Room(16,"TODO\n",false,doors16,enemy0,item0);
+    private Room room16 = new Room(16,"YOU WON! FREE TO GO NOW...\n",false,doors16,enemy0,item0);
 
     private Room[] arrRooms = {room1, room2, room3, room4,room5, room6, room7, room8, room9, room10, room11, room12, room13, room14, room15, room16};
 
@@ -421,8 +421,8 @@ public class Controller {
                     lstItems.getItems().remove(selectIndex);
                     txtAreaStory.appendText("those wrinkled eyes get wide and he nods excitedly.\n\n");
                     if (counterGems == 3) {
-                        txtAreaStory.appendText("the gnome leaves and drops something useful.\n\n");
-                        map.currentRoom.setItem(map.currentRoom.enemy.getItem());
+                        txtAreaStory.appendText("the gnome leaves. The door to freedom stands open.\n\n"); //and drops something useful.\n\n");
+                        //map.currentRoom.setItem(map.currentRoom.enemy.getItem());
                         map.currentRoom.setDescription("nothing but an empty room.");
                         map.currentRoom.setEnemy(enemy0);
                         map.currentRoom.doors.setTop(true);
@@ -450,7 +450,7 @@ public class Controller {
                     lstItems.getItems().remove(selectIndex);
                 }
                 //weapon increases damage
-                else if (selectItem.equals(weapon1) || selectItem.equals(weapon2) || selectItem.equals(weapon3)) {
+                else if (selectItem.equals(weapon1) || selectItem.equals(weapon2)) { // || selectItem.equals(weapon3)) {
                     //TODO: call function from item?
                     lblCurrentWeapon.setText(String.valueOf(lstItems.getSelectionModel().getSelectedItem()));
                     int currDamage = character.getDamage() - 2;
@@ -460,7 +460,7 @@ public class Controller {
                     } else if (selectItem.equals(weapon2)) {
                         character.setWeapon(weapon2);
                     } else {
-                        character.setWeapon(weapon3);
+                        //character.setWeapon(weapon3);
                     }
                     updateStatus();
                 } else {
