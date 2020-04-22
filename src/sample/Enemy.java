@@ -2,11 +2,13 @@ package sample;
 
 public class Enemy {
 
+    //Fields
     final protected String name;
     protected int hp;
     final protected Item item;
     final protected int damage;
 
+    //Constructor
     public Enemy(String name, int hp, Item item, int damage) {
         this.name = name;
         this.hp = hp;
@@ -14,18 +16,16 @@ public class Enemy {
         this.damage = damage;
     }
 
+    //Methods
     public String getName() {
         return name;
     }
-
     public int getHp() {
         return hp;
     }
-
     public Item getItem() {
         return item;
     }
-
     public int getDamage() {
         return damage;
     }
@@ -34,10 +34,15 @@ public class Enemy {
         this.hp = hp;
     }
 
-    public int Fight(int hp)
-    {
-        if (damage > hp) hp = 0;
-        else hp -= damage;
-        return hp; //TODO
+    //Functions
+    public int Fight(int hp) {
+        if (damage > hp) return 0;
+        else return hp - damage;
+    }
+
+    @Override
+    public String toString() {
+        if (hp != 0) return name + " " + hp;
+        else return name;
     }
 }

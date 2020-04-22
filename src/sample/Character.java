@@ -2,11 +2,13 @@ package sample;
 
 public class Character {
 
+    //Fields
     protected int maxHP;
     protected int hp;
     protected Weapon weapon;
     protected int damage;
 
+    //Constructor
     public Character(int maxHP, Weapon weapon, int damage) {
         this.maxHP = maxHP;
         this.hp = maxHP;
@@ -14,18 +16,16 @@ public class Character {
         this.damage = damage;
     }
 
+    //Methods
     public int getMaxHP() {
         return maxHP;
     }
-
     public int getHp() {
         return hp;
     }
-
     public Weapon getWeapon() {
         return weapon;
     }
-
     public int getDamage() {
         return damage;
     }
@@ -33,24 +33,19 @@ public class Character {
     public void setMaxHP(int maxHP) {
         this.maxHP = maxHP;
     }
-
     public void setHp(int hp) {
         this.hp = hp;
     }
-
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
-
     public void setDamage(int damage) {
         this.damage = damage;
     }
 
-    public int Fight(int hp)
-    {
-        if (damage > hp) hp = 0;
-        else hp -= damage;
-
-        return hp;
+    //Function
+    public int Fight(int hp) {
+        if (damage > hp) return 0; //hp = 0;
+        else return hp - damage;
     }
 }

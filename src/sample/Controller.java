@@ -3,33 +3,34 @@ package sample;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class Controller {
-    public Button btnMoveOn;
-    public Button btnFight;
-    public Button btnSelectUse;
-    public TextField txtInterface;
-    public Label lblHP;
-    public Label lblWeapon;
-    public Label lblItems;
-    public Label lblCurrentHP;
-    public Label lblMaxHP;
-    public TextArea txtAreaStory;
-    public Button btnCollectItem;
-    public ListView<Item> lstItems; //<Item>
-    public Label lblCurrentRoom;
+    public SplitPane gamepad;                   //Gamepad
+    public Button btnMoveOn;                    //Movement
     public Button btnLeft;
     public Button btnBack;
     public Button btnRight;
-    public Label lblnewItem;
-    public Label lblCurrentWeapon;
-    public Label lblCurrentEnemy;
-    public Label lblCurrentDamage;
+    public Button btnFight;                     //Interaction
+    public Button btnCollectItem;
+    public Button btnSelectUse;
+    public TextField txtInterface;              //no use yet
+    public Label lblHP;                         //Labels
     public Label lblDamage;
+    public Label lblWeapon;
+    public Label lblItems;
+    public Label lblnewItem;                    //Values
+    public Label lblCurrentEnemy;
+    public Label lblCurrentRoom;
+    public Label lblCurrentHP;
+    public Label lblMaxHP;
+    public Label lblCurrentWeapon;
+    public Label lblCurrentDamage;
     public Label lblCurrentArmor;
-    public Label lblEnemyHP;
-    public Label lblR1;
+    public TextArea txtAreaStory;               //Story
+    public ListView<Item> lstItems;             //Inventory //no use yet
+    public Label lblR1;                         //Map
     public Label lblR2;
     public Label lblR3;
     public Label lblR4;
@@ -44,339 +45,268 @@ public class Controller {
     public Label lblR13;
     public Label lblR14;
     public Label lblR15;
-    public SplitPane gamepad;
+    public Label[] mapLabels = new Label[15];   //array for mini-map on the side
 
     private Character character;
-    private Map map;
-    private Inventory inventory;
-    private int counterGems = 0;
+    private Map map = new Map();
+    //private Inventory inventory;  //no use yet
+    private int counterGems = 0;    //3 needed to end game
 
-    //private Room[] arrRooms = new Room[5];
-
-    private Weapon weapon0 = new Weapon("",0); //dummy
-    private Weapon weapon1 = new Weapon("knife", 5); //character.damage += 5
-    private Weapon weapon2 = new Weapon("sword",10); //character.damage += 10
-    //private Weapon weapon3 = new Weapon("long sword",20); //character.damage += 20
-
-    private UsableItem usableItem1 = new UsableItem("key",0);
-    private UsableItem usableItem2 = new UsableItem("water",5); //istHP += 5
-    private UsableItem usableItem3 = new UsableItem("armor",10); //maxHP += 10
-    private UsableItem usableItem4 = new UsableItem("food",10); //istHP += 10
-
-    private Item item0 = new Item("",0); //dummy
-    private Item item1 = new Item("rubin",0);
-    private Item item2 = new Item("sapphire",0);
-    private Item item3 = new Item("emerald",0);
-
-    private Enemy enemy0 = new Enemy("",0,item0,0); //dummy
-    private Enemy enemy1 = new Enemy("spider",10,weapon1,2);
-    private Enemy enemy2 = new Enemy("tree creature",15,weapon2,4);
-    private Enemy enemy3 = new Enemy("invisible",30,item3,2);
-    private Enemy enemy4 = new Enemy("wolf",30,usableItem3,4);
-    private Enemy enemy5 = new Enemy("wolf",30,usableItem1,4);
-    private Enemy enemy6 = new Enemy("lizard",5,usableItem3,10);
-    private Enemy enemy7 = new Enemy("gnome",100,item0,100); //move on if gems //weapon3
-
-    private Doors doors1 = new Doors(true, false, false, false, 2, 0, 0, 0);
-    private Doors doors2 = new Doors(true, false, false, true, 3, 0, 0, 1);
-    private Doors doors3 = new Doors(false, true, true, true, 0, 4, 6, 2);
-    private Doors doors4 = new Doors(false, false, true, false, 0, 0, 3, 0);
-    private Doors doors5 = new Doors(false, false, false, true, 8, 0, 0, 3);
-    private Doors doors6 = new Doors(true, true, true, false, 5, 3, 7, 0);
-    private Doors doors7 = new Doors(false, true, false, false, 0, 6, 0, 0);
-    private Doors doors8 = new Doors(true, true, true,true, 10, 9, 11, 5);
-    private Doors doors9 = new Doors(false, true, true, false, 0, 1, 8, 0);
-    private Doors doors10 = new Doors(false, false, false, true, 14, 0, 0, 8);
-    private Doors doors11 = new Doors(false, true, true, false, 0, 8, 12, 0);
-    private Doors doors12 = new Doors(false, true, true, false, 0, 11, 13, 0);
-    private Doors doors13 = new Doors(false, true, false, false, 0, 12, 0, 0);
-    private Doors doors14 = new Doors(true, false, false, true, 15, 0, 0, 10);
-    private Doors doors15 = new Doors(false, false, false, true, 16, 0, 0, 14);
-    private Doors doors16 = new Doors(false, false, false, false,0,0,0,0);
-
-    private Room room1 = new Room(1,"empty room, cold and bloody.\n",false, doors1, enemy0, item0);
-    private Room room2 = new Room(2,"hugh hairy spider attacks.\n",false, doors2, enemy1, item0);
-    private Room room3 = new Room(3,"table has milky glass with some fluid.\nmaybe drink it?!\n",false, doors3, enemy0, usableItem2);
-    private Room room4 = new Room(4,"under some weird looking bones in a corner lays a key.\n",false, doors4,enemy0, usableItem1);
-    private Room room5 = new Room(5,"blood traces around the door, tracks lead away.\nat the side lays some armor.\n",true, doors5, enemy0, usableItem3); //find key to move on
-    private Room room6 = new Room(6,"giant tree-like creature attacks.\n",false, doors6, enemy2, item0);
-    private Room room7 = new Room(7,"out of nowhere there lies a rubin. (wtf)\n",false, doors7, enemy0, item1);
-    private Room room8 = new Room(8,"something invisible attacks. nothing but a shadow can be recognized.\n",false, doors8, enemy3, item0);
-    private Room room9 = new Room(9,"going upstairs...\nnearly stepped on some nasty looking food.\nmaybe eat it?!\n",false, doors9, enemy0, usableItem4);
-    private Room room10 = new Room(10,"small lizard sits there looking all cute and harmless.\nsuddenly it spits fire! getting hot in here..\n",true, doors10, enemy6, item0);
-    private Room room11 = new Room(11,"gnarling wolf attacks.\n",false, doors11, enemy4, item0);
-    private Room room12 = new Room(12,"another wolf attacks looking all angry and injured.\n",false, doors12, enemy5, item0);
-    private Room room13 = new Room(13,"plugged in a human skull finding a sapphire.\n",false, doors13, enemy0, item2);
-    private Room room14 = new Room(14,"just as needed some more food.\nsomehow looks like already eaten before.\n",false, doors14, enemy0, usableItem4);
-    private Room room15 = new Room(15,"ugly gnome blocking the way.\nclueless which language he's speaking\nbut it looks like he wants something.\n",true, doors15, enemy7, item0);
-    private Room room16 = new Room(16,"YOU WON! FREE TO GO NOW...\n",false,doors16,enemy0,item0);
-
-    private Room[] arrRooms = {room1, room2, room3, room4,room5, room6, room7, room8, room9, room10, room11, room12, room13, room14, room15, room16};
-
-    public void initialize() //executed when program started
-    {
-        //TODO: this.map = new Map(); //sinnvolle Parameter?
-        this.map = new Map(room1);
-        this.character = new Character(20,weapon0,2);
-        //this.inventory = new Inventory(xyz); //TODO: sinnvoll?
-        this.lblCurrentArmor.setText("");
-        this.txtAreaStory.setText("waking up. dizzy and shivering.\n" + map.currentRoom.getDescription() + "\n");
+    public void initialize() { //executed when program started
+        map.CreateMap();
+        character = new Character(20, map.weapon0,2);
+        lblCurrentArmor.setText("");
+        txtAreaStory.setText("You wake up. Dizzy and shivering.\n");
+        txtAreaStory.appendText(String.valueOf(map.currentRoom));
+        mapLabels[0] = lblR1;   //fill array for mini-map on the side
+        mapLabels[1] = lblR2;
+        mapLabels[2] = lblR3;
+        mapLabels[3] = lblR4;
+        mapLabels[4] = lblR5;
+        mapLabels[5] = lblR6;
+        mapLabels[6] = lblR7;
+        mapLabels[7] = lblR8;
+        mapLabels[8] = lblR9;
+        mapLabels[9] = lblR10;
+        mapLabels[10] = lblR11;
+        mapLabels[11] = lblR12;
+        mapLabels[12] = lblR13;
+        mapLabels[13] = lblR14;
+        mapLabels[14] = lblR15;
         updateStatus();
     }
 
-    private void updateStatus()
-    {
-        this.lblCurrentHP.setText(String.valueOf(character.getHp()));
-        this.lblMaxHP.setText(String.valueOf(character.getMaxHP()));
-        this.lblCurrentDamage.setText(String.valueOf(character.getDamage()));
-        this.lblCurrentWeapon.setText(String.valueOf(character.getWeapon()));
-        this.lblCurrentRoom.setText("Room: " + map.currentRoom.getNumber());
-        //this.lblnewItem.setText(map.currentRoom.item.getName());
-        this.lblCurrentEnemy.setText(map.currentRoom.enemy.getName());
-        if(this.map.currentRoom.getEnemy() == enemy0) {
-            this.lblEnemyHP.setText("");
-        } else {
-            this.lblEnemyHP.setText(String.valueOf(this.map.currentRoom.enemy.getHp()));
-        }
-        if(this.map.currentRoom.getItem() == item0)
-        {
-            this.lblnewItem.setText("");
-        }
-        else
-        {
-            this.lblnewItem.setText(String.valueOf(map.currentRoom.item.getName()));
-        }
-        switch (this.map.currentRoom.getNumber())
-        {
-            case 1:
-                lblR1.setText("@");
-                break;
-            case 2:
-                lblR2.setText("@");
-                break;
-            case 3:
-                lblR3.setText("@");
-                break;
-            case 4:
-                lblR4.setText("@");
-                break;
-            case 5:
-                lblR5.setText("@");
-                break;
-            case 6:
-                lblR6.setText("@");
-                break;
-            case 7:
-                lblR7.setText("@");
-                break;
-            case 8:
-                lblR8.setText("@");
-                break;
-            case 9:
-                lblR9.setText("@");
-                break;
-            case 10:
-                lblR10.setText("@");
-                break;
-            case 11:
-                lblR11.setText("@");
-                break;
-            case 12:
-                lblR12.setText("@");
-                break;
-            case 13:
-                lblR13.setText("@");
-                break;
-            case 14:
-                lblR14.setText("@");
-                break;
-            case 15:
-                lblR15.setText("@");
-                break;
-            default:
-                break;
+    private void updateStatus() {
+        if (character.getHp() <= 0) gameover();
+        else {
+            lblCurrentHP.setText(String.valueOf(character.getHp()));
+            lblMaxHP.setText(String.valueOf(character.getMaxHP()));
+            lblCurrentDamage.setText(String.valueOf(character.getDamage()));
+            lblCurrentWeapon.setText(String.valueOf(character.getWeapon()));
+            lblCurrentRoom.setText("Room: " + map.currentRoom.getNumber());
+            lblnewItem.setText(String.valueOf(map.currentRoom.item));
+            lblCurrentEnemy.setText(String.valueOf(map.currentRoom.enemy));
+            //txtAreaStory.appendText(map.currentRoom + "\n");
+            mapLabels[map.currentRoom.getNumber() - 1].setText("@");
+            mapLabels[map.currentRoom.getNumber() - 1].setTextFill(Color.RED);
         }
     }
 
     public void moveon(ActionEvent actionEvent) {
-        if(this.map.currentRoom.doors.isTop())
-        {
-            if(this.map.currentRoom.doors.getRoomTop() == 3)
-            {
-                this.room3.setItem(usableItem2);
+        if(map.currentRoom.doors.isTop()) {
+            txtAreaStory.appendText("You move on.\n\n");
+            switch(map.currentRoom.doors.getRoomTop()) {
+                case 3: //water
+                    map.rooms[map.currentRoom.doors.getRoomTop()-1].setItem(map.usableItem2);
+                    break;
+                case 9: //food
+                case 14:
+                    map.rooms[map.currentRoom.doors.getRoomTop()-1].setItem(map.usableItem4);
+                    break;
+                case 10: //lizard
+                    map.rooms[map.currentRoom.doors.getRoomTop()-1].setEnemy(map.enemy6);
+                    character.setHp(map.rooms[map.currentRoom.doors.getRoomTop()-1].enemy.Fight(character.getHp()));
+                    //if(character.getHp() == 0) gameover();
+                    break;
+                default:
+                    break;
             }
-            else if(this.map.currentRoom.doors.getRoomTop() == 9 || this.map.currentRoom.doors.getRoomTop() == 14)
-            {
-                arrRooms[this.map.currentRoom.doors.getRoomTop() - 1].setItem(this.usableItem4);
-            }
-            this.map.setCurrentRoom(arrRooms[this.map.currentRoom.doors.getRoomTop() - 1]);
+            mapLabels[map.currentRoom.getNumber()-1].setTextFill(Color.BLACK);
+            map.setCurrentRoom(map.rooms[map.currentRoom.doors.getRoomTop()-1]);
+            txtAreaStory.appendText(String.valueOf(map.currentRoom));
             updateStatus();
-            if(this.map.currentRoom.getNumber() == 10)
-            {
-                if(this.map.currentRoom.enemy.getDamage() < this.character.getHp())
-                {
-                    this.character.setHp(this.character.getHp() - this.map.currentRoom.enemy.getDamage());
-                    lblCurrentHP.setText((String.valueOf(this.character.getHp())));
-                }
-                else
-                {
-                    gameover();
-                    this.map.currentRoom.setDescription("");
-                }
-            }
-            this.txtAreaStory.appendText(this.map.currentRoom.getDescription() + "\n");
-        }
-        else
-        {
-            if(this.map.currentRoom.doors.getRoomTop() != 0)
-            {
-                this.txtAreaStory.appendText("door is locked.\n\n");
+        } else {
+            if(map.currentRoom.doors.getRoomTop() != 0) {
+                txtAreaStory.appendText("door is locked.\n\n");
             }
         }
     }
+
     public void goleft(ActionEvent actionEvent) {
-        if(map.currentRoom.doors.isLeft())
-        {
-            if(this.map.currentRoom.doors.getRoomLeft() == 3)
-            {
-                room3.setItem(usableItem2);
+        if(map.currentRoom.doors.isLeft()) {
+            txtAreaStory.appendText("You go left.\n\n");
+            switch (map.currentRoom.doors.getRoomLeft()) {
+                case 1: //trap door
+                    txtAreaStory.appendText("It's a trap (door)!\nYou fall deep and hit the ground amidst a puddle of blood.\n");
+                    character.setHp(character.getHp() - 6);
+                    //if (character.getHp() == 0) gameover();
+                    break;
+                case 3: //water
+                    map.rooms[map.currentRoom.doors.getRoomLeft()-1].setItem(map.usableItem2);
+                    break;
+                case 9: //food
+                case 14:
+                    map.rooms[map.currentRoom.doors.getRoomLeft()-1].setItem(map.usableItem4);
+                    break;
+                default:
+                    break;
             }
-            else if(this.map.currentRoom.doors.getRoomLeft() == 9 || this.map.currentRoom.doors.getRoomLeft() == 14)
-            {
-                arrRooms[this.map.currentRoom.doors.getRoomLeft() - 1].setItem(usableItem4);
-            }
-            else if(this.map.currentRoom.doors.getRoomLeft() == 1)
-            {
-                txtAreaStory.appendText("it's a trap!\nfalling deep hitting the ground amidst a puddle of blood.\n");
-                this.character.setHp(this.character.getHp() - 6);
-            }
-            this.map.setCurrentRoom(arrRooms[this.map.currentRoom.doors.getRoomLeft() - 1]);
+            mapLabels[map.currentRoom.getNumber()-1].setTextFill(Color.BLACK);
+            map.setCurrentRoom(map.rooms[map.currentRoom.doors.getRoomLeft()-1]);
+            txtAreaStory.appendText(String.valueOf(map.currentRoom));
             updateStatus();
-            this.txtAreaStory.appendText(map.currentRoom.getDescription() + "\n");
-        }
-        else
-        {
-            if(this.map.currentRoom.doors.getRoomLeft() != 0)
-            {
+        } else {
+            if(map.currentRoom.doors.getRoomLeft() != 0) {
                 txtAreaStory.appendText("door is locked.\n\n");
             }
         }
     }
+
     public void goback(ActionEvent actionEvent) {
-        if(map.currentRoom.doors.isBottom())
-        {
-            if(this.map.currentRoom.doors.getRoomBottom() == 3)
-            {
-                room3.setItem(usableItem2);
+        if(map.currentRoom.doors.isBottom()) {
+            txtAreaStory.appendText("You go back.\n\n");
+            switch (map.currentRoom.doors.getRoomBottom()) {
+                case 3: //water
+                    map.rooms[map.currentRoom.doors.getRoomBottom()-1].setItem(map.usableItem2);
+                    break;
+                case 9: //food
+                case 14:
+                    map.rooms[map.currentRoom.doors.getRoomBottom()-1].setItem(map.usableItem4);
+                    break;
+                case 10: //lizard
+                    map.rooms[map.currentRoom.doors.getRoomBottom()-1].setEnemy(map.enemy6);
+                    character.setHp(map.rooms[map.currentRoom.doors.getRoomBottom()-1].enemy.Fight(character.getHp()));
+                    //if (character.getHp() == 0) gameover();
+                    break;
+                default:
+                    break;
             }
-            else if(this.map.currentRoom.doors.getRoomBottom() == 9 || this.map.currentRoom.doors.getRoomBottom() == 14)
-            {
-                arrRooms[this.map.currentRoom.doors.getRoomBottom() - 1].setItem(usableItem4);
-            }
-            this.map.setCurrentRoom(arrRooms[this.map.currentRoom.doors.getRoomBottom() - 1]);
+            mapLabels[map.currentRoom.getNumber()-1].setTextFill(Color.BLACK);
+            map.setCurrentRoom(map.rooms[map.currentRoom.doors.getRoomBottom()-1]);
+            txtAreaStory.appendText(String.valueOf(map.currentRoom));
             updateStatus();
-            if(this.map.currentRoom.getNumber() == 10)
-            {
-                if(this.map.currentRoom.enemy.getDamage() < this.character.getHp())
-                {
-                    this.character.setHp(this.character.getHp() - this.map.currentRoom.enemy.getDamage());
-                    lblCurrentHP.setText((String.valueOf(this.character.getHp())));
-                    updateStatus();
-                }
-                else
-                {
-                    gameover();
-                    this.map.currentRoom.setDescription("");
-                }
-            }
-            this.txtAreaStory.appendText(map.currentRoom.getDescription() + "\n");
-        }
-        else
-        {
-            if(this.map.currentRoom.doors.getRoomBottom() != 0)
-            {
+        } else {
+            if(map.currentRoom.doors.getRoomBottom() != 0) {
                 txtAreaStory.appendText("door is locked.\n\n");
             }
         }
     }
+
     public void goright(ActionEvent actionEvent) {
-        if(map.currentRoom.doors.isRight())
-        {
-            if(this.map.currentRoom.doors.getRoomRight() == 3)
-            {
-                room3.setItem(usableItem2);
+        if(map.currentRoom.doors.isRight()) {
+            txtAreaStory.appendText("You go right.\n\n");
+            switch (map.currentRoom.doors.getRoomRight()) {
+                case 3: //water
+                    map.rooms[map.currentRoom.doors.getRoomRight()-1].setItem((map.usableItem2));
+                    break;
+                case 9: //food
+                case 14:
+                    map.rooms[map.currentRoom.doors.getRoomRight()-1].setItem(map.usableItem4);
+                    break;
+                default:
+                    break;
             }
-            else if(this.map.currentRoom.doors.getRoomRight() == 9 || this.map.currentRoom.doors.getRoomRight() == 14)
-            {
-                arrRooms[this.map.currentRoom.doors.getRoomRight() - 1].setItem(usableItem4);
-            }
-            this.map.setCurrentRoom(arrRooms[this.map.currentRoom.doors.getRoomRight() - 1]);
+            mapLabels[map.currentRoom.getNumber()-1].setTextFill(Color.BLACK);
+            map.setCurrentRoom(map.rooms[map.currentRoom.doors.getRoomRight()-1]);
+            txtAreaStory.appendText(String.valueOf(map.currentRoom));
             updateStatus();
-            this.txtAreaStory.appendText(map.currentRoom.getDescription() + "\n");
-        }
-        else
-        {
-            if(this.map.currentRoom.doors.getRoomRight() != 0)
-            {
+        } else {
+            if(map.currentRoom.doors.getRoomRight() != 0) {
                 txtAreaStory.appendText("door is locked.\n\n");
             }
         }
     }
 
     public void fight(ActionEvent actionEvent) {
-        //txtAreaStory.appendText(map.currentRoom.enemy.Text());
-        if(map.currentRoom.getEnemy() == enemy0)
-        {
+        //no enemy
+        if(map.currentRoom.getEnemy() == map.enemy0) {
             txtAreaStory.appendText("you can't fight without an enemy.\n\n");
         }
-        else if (this.map.currentRoom.getEnemy() == enemy6)
-        {
+        //small lizard
+        else if (map.currentRoom.getEnemy() == map.enemy6) {
             txtAreaStory.appendText("trying to kill poor lizard.\nit quickly shambles away.\n\n");
-            lblCurrentEnemy.setText("");
-            lblEnemyHP.setText("");
+            map.currentRoom.setEnemy(map.enemy0);
         }
-        else
-        {
+        //any other enemy
+        else {
             character.setHp(map.currentRoom.enemy.Fight(character.getHp()));
             map.currentRoom.enemy.setHp(character.Fight(map.currentRoom.enemy.getHp()));
-
-            if (map.currentRoom.enemy.hp == 0)
-            {
-                txtAreaStory.appendText("you killed the beast.\nit dropped something useful.\n\n");
+            if (map.currentRoom.enemy.hp == 0) {
+                txtAreaStory.appendText("You killed the beast!\nIt dropped something useful.\n\n");
                 map.currentRoom.setItem(map.currentRoom.enemy.getItem());
-                map.currentRoom.setDescription("nothing but an empty room.\n");
-                map.currentRoom.setEnemy(enemy0);
+                map.currentRoom.setDescription("Nothing but an empty room.\n");
+                map.currentRoom.setEnemy(map.enemy0);
             }
+        }
+        updateStatus();
+    }
 
-            if (character.hp == 0) gameover();
-            else updateStatus();
+    public void selectuse(ActionEvent actionEvent) {
+        try {
+            //select item from list to use
+            Item selectItem = lstItems.getSelectionModel().getSelectedItem();
+            int selectIndex = lstItems.getSelectionModel().getSelectedIndex();
 
-            /*if(map.currentRoom.enemy.getDamage() < character.getHp())
-            {
-                character.setHp(character.getHp() - map.currentRoom.enemy.getDamage());
-                lblCurrentHP.setText(String.valueOf(character.getHp()));
-                if(character.getDamage() < map.currentRoom.enemy.getHp())
-                {
-                    map.currentRoom.enemy.setHp(map.currentRoom.enemy.getHp() - character.getDamage());
-                    lblEnemyHP.setText(String.valueOf(map.currentRoom.enemy.getHp()));
-                } else {
-                    txtAreaStory.appendText("you killed the beast.\nit dropped something useful.\n\n");
-                    map.currentRoom.setItem(map.currentRoom.enemy.getItem());
-                    map.currentRoom.setDescription("nothing but an empty room.\n");
-                    map.currentRoom.setEnemy(enemy0);
+            if (selectItem != null) {
+                //key opens locked door
+                if (selectItem.equals(map.usableItem1) && map.currentRoom.getNumber() != 15 && map.currentRoom.isLocked()) {
+                    if (map.currentRoom.doors.getRoomTop() != 0) {
+                        map.currentRoom.doors.setTop(true);
+                    } else if (map.currentRoom.doors.getRoomRight() != 0) {
+                        map.currentRoom.doors.setRight(true);
+                    } else if (map.currentRoom.doors.getRoomLeft() != 0) {
+                        map.currentRoom.doors.setLeft(true);
+                    } else if (map.currentRoom.doors.getRoomBottom() != 0) {
+                        map.currentRoom.doors.setBottom(true);
+                    }
+                    txtAreaStory.appendText("door is unlocked now.\n\n");
+                    lstItems.getItems().remove(selectIndex);
+                }
+                //rubin, emerald and sapphire for gnome
+                else if ((selectItem.equals(map.item1) || selectItem.equals(map.item2) || selectItem.equals(map.item3)) && map.currentRoom.getNumber() == 15) {
+                    counterGems++;
+                    lstItems.getItems().remove(selectIndex);
+                    txtAreaStory.appendText("those wrinkled eyes get wide and he nods excitedly.\n\n");
+                    if (counterGems == 3) {
+                        txtAreaStory.appendText("the gnome leaves. The door to freedom stands open.\n\n"); //and drops something useful.\n\n");
+                        //map.currentRoom.setItem(map.currentRoom.enemy.getItem());
+                        map.currentRoom.setDescription("nothing but an empty room.\n\n");
+                        map.currentRoom.setEnemy(map.enemy0);
+                        map.currentRoom.doors.setTop(true);
+                        updateStatus();
+                    }
+                }
+                //water or food recover hp
+                else if (selectItem.equals(map.usableItem2) || selectItem.equals(map.usableItem4)) {
+                    character.setHp(selectItem.Recover(character.getHp(), character.getMaxHP()));
                     updateStatus();
-                    //lblnewItem.setText(map.currentRoom.item.getName());
-                    //lblCurrentEnemy.setText(map.currentRoom.enemy.getName());
-                    //lblEnemyHP.setText("");
+                    lstItems.getItems().remove(selectIndex);
+                }
+                //armor increases max hp
+                else if (selectItem.equals(map.usableItem3)) {
+                    character.setMaxHP(character.getMaxHP() + selectItem.getValue());
+                    character.setHp(character.getMaxHP());
+                    lblCurrentArmor.setText(String.valueOf(selectItem));
+                    map.currentRoom.setDescription("nothing but an empty room.\n\n");
+                    updateStatus();
+                    lstItems.getItems().remove(selectIndex);
+                }
+                //weapon increases damage
+                else if (selectItem.equals(map.weapon1) || selectItem.equals(map.weapon2)) { // || selectItem.equals(weapon3)) {
+                    character.setDamage(selectItem.value);
+                    character.setWeapon((Weapon)selectItem);
+                    updateStatus();
+                    lstItems.getItems().remove(selectIndex);
+                } else {
+                    txtAreaStory.appendText("there is no use for this yet.\n\n");
                 }
             }
-            else
-            {
-                gameover();
-            }*/
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
+    public void collectItem(ActionEvent actionEvent) {
+        if (map.currentRoom.getItem() != map.item0) {
+            //add item to list
+            lstItems.getItems().add(map.currentRoom.getItem());
+            //delete item from room
+            map.currentRoom.setItem(map.item0);
+            updateStatus();
+        } else {
+            txtAreaStory.appendText("there is nothing you should take with you.\n\n");
+        }
+    }
     public void gameover() {
         FadeTransition t = new FadeTransition(new Duration(1000), gamepad);
         t.setFromValue(1);
@@ -393,98 +323,5 @@ public class Controller {
         btnMoveOn.setDisable(true);
         btnRight.setDisable(true);
         txtInterface.setDisable(true);*/
-        //TODO: delete inventory
-    }
-
-    public void selectuse(ActionEvent actionEvent) {
-        try {
-            //select item from list to use
-            Item selectItem = lstItems.getSelectionModel().getSelectedItem();
-            int selectIndex = lstItems.getSelectionModel().getSelectedIndex();
-            if (!selectItem.equals(item0)) {
-                //key opens locked door
-                if (selectItem.equals(usableItem1) && map.currentRoom.getNumber() != 15 && map.currentRoom.isLocked() /*&& !map.currentRoom.doors.isTop() || !map.currentRoom.doors.isRight() || !map.currentRoom.doors.isLeft() || !map.currentRoom.doors.isBottom() &&*/) {
-                    if (map.currentRoom.doors.getRoomTop() != 0) {
-                        map.currentRoom.doors.setTop(true);
-                    } else if (map.currentRoom.doors.getRoomRight() != 0) {
-                        map.currentRoom.doors.setRight(true);
-                    } else if (map.currentRoom.doors.getRoomLeft() != 0) {
-                        map.currentRoom.doors.setLeft(true);
-                    } else if (map.currentRoom.doors.getRoomBottom() != 0) {
-                        map.currentRoom.doors.setBottom(true);
-                    }
-                    txtAreaStory.appendText("door is unlocked now.\n\n");
-                    lstItems.getItems().remove(selectIndex);
-                //rubin, emerald and sapphire for gnome
-                } else if ((selectItem.equals(item1) || selectItem.equals(item2) || selectItem.equals(item3)) && this.map.currentRoom.getNumber() == 15) {
-                    counterGems++;
-                    lstItems.getItems().remove(selectIndex);
-                    txtAreaStory.appendText("those wrinkled eyes get wide and he nods excitedly.\n\n");
-                    if (counterGems == 3) {
-                        txtAreaStory.appendText("the gnome leaves. The door to freedom stands open.\n\n"); //and drops something useful.\n\n");
-                        //map.currentRoom.setItem(map.currentRoom.enemy.getItem());
-                        map.currentRoom.setDescription("nothing but an empty room.");
-                        map.currentRoom.setEnemy(enemy0);
-                        map.currentRoom.doors.setTop(true);
-                        updateStatus();
-                    }
-                }
-                //water or food recover hp
-                else if (selectItem.equals(usableItem2) || selectItem.equals(usableItem4)) {
-                    //TODO: call function from item?
-                    if (character.getHp() + selectItem.getValue() > character.getMaxHP()) {
-                        character.setHp(character.getMaxHP());
-                    } else {
-                        character.setHp(character.getHp() + selectItem.getValue());
-                    }
-                    updateStatus();
-                    lstItems.getItems().remove(selectIndex);
-                }
-                //armor increases max hp
-                else if (selectItem.equals(usableItem3)) {
-                    //TODO: call function from item?
-                    character.setMaxHP(character.getMaxHP() + selectItem.getValue());
-                    character.setHp(character.getMaxHP());
-                    lblCurrentArmor.setText(String.valueOf(lstItems.getSelectionModel().getSelectedItem()));
-                    updateStatus();
-                    lstItems.getItems().remove(selectIndex);
-                }
-                //weapon increases damage
-                else if (selectItem.equals(weapon1) || selectItem.equals(weapon2)) { // || selectItem.equals(weapon3)) {
-                    //TODO: call function from item?
-                    lblCurrentWeapon.setText(String.valueOf(lstItems.getSelectionModel().getSelectedItem()));
-                    int currDamage = character.getDamage() - 2;
-                    character.setDamage(character.getDamage() - currDamage + selectItem.getValue());
-                    if (selectItem.equals(weapon1)) {
-                        character.setWeapon(weapon1);
-                    } else if (selectItem.equals(weapon2)) {
-                        character.setWeapon(weapon2);
-                    } else {
-                        //character.setWeapon(weapon3);
-                    }
-                    updateStatus();
-                } else {
-                    txtAreaStory.appendText("there is no use for this yet.\n");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void collectItem(ActionEvent actionEvent) {
-        //TODO: add to inventory
-        //add item to list
-        if (map.currentRoom.getItem() != item0)
-        {
-            lstItems.getItems().add(map.currentRoom.getItem());
-            //delete item from room
-            map.currentRoom.setItem(item0);
-            lblnewItem.setText("");
-        }
-        else
-        {
-            txtAreaStory.appendText("there is nothing you should take with you.\n\n");
-        }
     }
 }

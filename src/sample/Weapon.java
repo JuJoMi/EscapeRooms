@@ -7,19 +7,9 @@ public class Weapon extends Item {
         super(name, value);
     }
 
-    //Methods
     //Function
-    public int Fight(int hp)
-    {
-        if (value > hp) hp = 0;
-        else hp = hp - value;
-
-        return hp; //TODO
-    }
-
-    public int Damage(int damage)
-    {
-        damage += this.value;
-        return damage;
-    }
+    /*@Override
+    public int Damage(int damage) {
+        return damage - 2 + value; //-2 due to zero-weapon damage from beginning
+    }*/
 }

@@ -2,14 +2,15 @@ package sample;
 
 public class UsableItem extends Item {
 
+    //Constructor
     public UsableItem(String name, int value)
     {
         super(name, value);
     }
 
-    public int Heal(int hp)
-    {
-        hp += this.value;
-        return hp; //TODO
+    //Function
+    @Override
+    public int Recover(int hp, int maxhp) {
+        return Math.min(hp + value, maxhp);
     }
 }

@@ -13,21 +13,18 @@ public class Item {
     }
 
     //Methods
-    //Getter
-    public String getName() {
-        return name;
+    public String getName() { return name; }
+    public int getValue() { return value; }
+
+    public void setValue(int value) { this.value = value; }
+
+    //Functions
+    public int Recover(int hp, int maxhp) {
+        return 0;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
+    public int Damage(int damage) { return 0; }
 
     @Override
-    public String toString(){
-        return (this.name);
-    }
+    public String toString() { return name; }
 }

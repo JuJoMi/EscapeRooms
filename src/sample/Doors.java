@@ -3,7 +3,6 @@ package sample;
 public class Doors {
 
     //Fields
-
     protected boolean top;
     protected boolean left;
     protected boolean right;
@@ -26,35 +25,27 @@ public class Doors {
     }
 
     //Methods
-    //Getter
     public boolean isTop() {
         return top;
     }
-
     public boolean isLeft() {
         return left;
     }
-
     public boolean isRight() {
         return right;
     }
-
     public boolean isBottom() {
         return bottom;
     }
-
     public int getRoomTop() {
         return roomTop;
     }
-
     public int getRoomLeft() {
         return roomLeft;
     }
-
     public int getRoomRight() {
         return roomRight;
     }
-
     public int getRoomBottom() {
         return roomBottom;
     }
@@ -62,19 +53,13 @@ public class Doors {
     public void setTop(boolean top) {
         this.top = top;
     }
-
     public void setLeft(boolean left) {
         this.left = left;
     }
-
     public void setRight(boolean right) {
         this.right = right;
     }
-
     public void setBottom(boolean bottom) {
         this.bottom = bottom;
     }
-
-    //Function
-
 }

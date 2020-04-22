@@ -1,6 +1,6 @@
 package sample;
 
-public class Inventory {
+public class Inventory { //no use yet
 
     private Item item1, item2, item3;
     protected Item currentItem;
