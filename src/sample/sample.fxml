@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -25,7 +26,7 @@
    <children>
       <StackPane prefHeight="491.2" prefWidth="873.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="900.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="1000.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/gameover.jpg" />
                </image>
@@ -215,21 +216,21 @@
                                           <RowConstraints vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Label fx:id="lblR15" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" />
-                                          <Label fx:id="lblR14" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <Label fx:id="lblR10" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <Label fx:id="lblR8" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <Label fx:id="lblR5" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                          <Label fx:id="lblR3" alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label fx:id="lblR2" alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                           <Label fx:id="lblR1" alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <Label fx:id="lblR2" alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <Label fx:id="lblR3" alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                           <Label fx:id="lblR4" alignment="BOTTOM_CENTER" GridPane.rowIndex="5" />
-                                          <Label fx:id="lblR9" alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Label fx:id="lblR7" alignment="BOTTOM_CENTER" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                          <Label fx:id="lblR5" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                           <Label fx:id="lblR6" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <Label fx:id="lblR7" alignment="BOTTOM_CENTER" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                          <Label fx:id="lblR8" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <Label fx:id="lblR9" alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Label fx:id="lblR10" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                           <Label fx:id="lblR11" alignment="BOTTOM_CENTER" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                           <Label fx:id="lblR12" alignment="BOTTOM_CENTER" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                                           <Label fx:id="lblR13" alignment="BOTTOM_CENTER" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                          <Label fx:id="lblR14" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Label fx:id="lblR15" alignment="BOTTOM_CENTER" GridPane.columnIndex="2" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -240,16 +241,26 @@
                   </AnchorPane>
               </items>
             </SplitPane>
-            <ImageView fx:id="dungeon" fitHeight="900.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="dungeon" fitHeight="1000.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/dungeon.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="btnStartGame" mnemonicParsing="false" onAction="#startGame" text="START" textAlignment="CENTER">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
+            <VBox fx:id="vboxMenu" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" StackPane.alignment="BOTTOM_CENTER">
+               <children>
+                  <Button fx:id="btnStartGame" mnemonicParsing="false" onAction="#startGame" text="START" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnNewGame" disable="true" mnemonicParsing="false" onAction="#newGame" opacity="0.0" text="New Game" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font></Button>
+               </children>
+               <StackPane.margin>
+                  <Insets bottom="100.0" />
+               </StackPane.margin></VBox>
          </children>
       </StackPane>
    </children>

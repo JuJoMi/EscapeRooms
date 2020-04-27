@@ -4,6 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -46,9 +47,11 @@ public class Controller {
     public Label lblR13;
     public Label lblR14;
     public Label lblR15;
-    public Label[] mapLabels = new Label[16];   //array for mini-map on the side
+    public Label[] mapLabels = new Label[15];   //array for mini-map on the side
     public ImageView dungeon;
     public Button btnStartGame;
+    public Button btnNewGame;
+    public VBox vboxMenu;
 
     private Character character;
     private Map map = new Map();
@@ -88,6 +91,7 @@ public class Controller {
         dungeon.setDisable(true);
         btnStartGame.setDisable(true);
         btnStartGame.setOpacity(0);
+        vboxMenu.setDisable(true);
     }
 
     private void updateStatus() {
@@ -100,8 +104,10 @@ public class Controller {
             lblCurrentRoom.setText("Room: " + map.currentRoom.getNumber());
             lblnewItem.setText(String.valueOf(map.currentRoom.item));
             lblCurrentEnemy.setText(String.valueOf(map.currentRoom.enemy));
-            mapLabels[map.currentRoom.getNumber() - 1].setText("@");
-            mapLabels[map.currentRoom.getNumber() - 1].setTextFill(Color.RED);
+            if (map.currentRoom.getNumber() <= 15) {
+                mapLabels[map.currentRoom.getNumber() - 1].setText("@");
+                mapLabels[map.currentRoom.getNumber() - 1].setTextFill(Color.RED);
+            }
         }
     }
 
@@ -335,16 +341,23 @@ public class Controller {
         t.setFromValue(1);
         t.setToValue(0);
         t.play();
-        /*txtAreaStory.setText("\n\n\nY O U   D I E D !");
-        character.setHp(0);
-        lblCurrentHP.setText(String.valueOf(character.getHp()));
-        btnSelectUse.setDisable(true);
-        btnFight.setDisable(true);
-        btnBack.setDisable(true);
-        btnCollectItem.setDisable(true);
-        btnLeft.setDisable(true);
-        btnMoveOn.setDisable(true);
-        btnRight.setDisable(true);
-        txtInterface.setDisable(true);*/
+
+        gamepad.setDisable(true);
+        vboxMenu.setDisable(false);
+        btnNewGame.setDisable(false);
+        btnNewGame.setOpacity(1);
+    }
+
+    public void newGame(ActionEvent actionEvent) {
+        for (int i = 0; i <= 14; i++) {
+            mapLabels[i].setText("");
+            mapLabels[i].setTextFill(Color.BLACK);
+        }
+        gamepad.setDisable(false);
+        gamepad.setOpacity(1);
+        vboxMenu.setDisable(true);
+        btnNewGame.setDisable(true);
+        btnNewGame.setOpacity(0);
+        initialize();
     }
 }
