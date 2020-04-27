@@ -24,9 +24,9 @@
    <children>
       <StackPane prefHeight="491.2" prefWidth="873.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="492.0" fitWidth="873.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="900.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/gameover.jpg" />
+                  <Image url="@../images/gameover.jpg"/>
                </image>
             </ImageView>
             <SplitPane fx:id="gamepad" dividerPositions="0.3866513233601841" prefHeight="435.0" prefWidth="871.0">
@@ -51,7 +51,6 @@
                                           <Button fx:id="btnCollectItem" mnemonicParsing="false" onAction="#collectItem" text="collect item" />
                                           <Button fx:id="btnFight" mnemonicParsing="false" onAction="#fight" text="fight" GridPane.rowIndex="1" />
                                           <Label fx:id="lblnewItem" text="Label" GridPane.columnIndex="1" />
-                                          <Label fx:id="lblEnemyHP" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <Label fx:id="lblCurrentEnemy" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
@@ -93,8 +92,9 @@
                                                 <GridPane prefHeight="212.0" prefWidth="229.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="57.6" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.59999237060546" minWidth="10.0" prefWidth="79.20000000000002" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.20000000000002" minWidth="10.0" prefWidth="112.79999999999998" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.59999237060546" minWidth="10.0" prefWidth="85.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.59999237060546" minWidth="3.0" prefWidth="3.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.20000000000002" minWidth="10.0" prefWidth="109.79999999999998" />
                                                   </columnConstraints>
                                                   <rowConstraints>
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -137,20 +137,21 @@
                                                             <Label fx:id="lblCurrentArmor" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="30.0" prefWidth="87.0" text="armor" textAlignment="RIGHT" wrapText="true" />
                                                          </children>
                                                       </Group>
-                                                      <Group GridPane.columnIndex="2">
+                                                      <Group GridPane.columnIndex="3">
                                                          <children>
                                                             <Label fx:id="lblItems" layoutY="3.999999523162842" text="Items:" />
                                                          </children>
                                                       </Group>
-                                                      <ListView fx:id="lstItems" prefHeight="80.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
-                                                      <Button fx:id="btnSelectUse" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectuse" prefHeight="35.0" prefWidth="110.0" text="select/use" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                                      <ListView fx:id="lstItems" prefHeight="80.0" prefWidth="119.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
+                                                      <Button fx:id="btnSelectUse" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectuse" prefHeight="35.0" prefWidth="110.0" text="select/use" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                                      <Separator halignment="RIGHT" orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowSpan="7" />
                                                    </children>
                                                 </GridPane>
                                              </children>
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
-                                                <GridPane prefHeight="212.0" prefWidth="352.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <GridPane prefHeight="240.0" prefWidth="240.0" AnchorPane.bottomAnchor="0.0">
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -162,22 +163,22 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <Button fx:id="btnMoveOn" alignment="CENTER" mnemonicParsing="false" onAction="#moveon" prefHeight="97.0" prefWidth="97.0" text="move on" GridPane.columnIndex="1">
+                                                      <Button fx:id="btnMoveOn" alignment="CENTER" mnemonicParsing="false" onAction="#moveon" prefHeight="120.0" prefWidth="120.0" text="move on" GridPane.columnIndex="1">
                                                          <effect>
                                                             <InnerShadow height="25.0" radius="12.0" width="25.0" />
                                                          </effect>
                                                       </Button>
-                                                      <Button fx:id="btnLeft" alignment="CENTER" mnemonicParsing="false" onAction="#goleft" prefHeight="122.0" prefWidth="89.0" text="go left" GridPane.rowIndex="1">
+                                                      <Button fx:id="btnLeft" alignment="CENTER" mnemonicParsing="false" onAction="#goleft" prefHeight="120.0" prefWidth="120.0" text="go left" GridPane.rowIndex="1">
                                                          <effect>
                                                             <InnerShadow height="25.0" radius="12.0" width="25.0" />
                                                          </effect>
                                                       </Button>
-                                                      <Button fx:id="btnBack" alignment="CENTER" mnemonicParsing="false" onAction="#goback" prefHeight="99.0" prefWidth="101.0" text="go back" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                      <Button fx:id="btnBack" alignment="CENTER" mnemonicParsing="false" onAction="#goback" prefHeight="120.0" prefWidth="120.0" text="go back" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                          <effect>
                                                             <InnerShadow height="25.0" radius="12.0" width="25.0" />
                                                          </effect>
                                                       </Button>
-                                                      <Button fx:id="btnRight" alignment="CENTER" mnemonicParsing="false" onAction="#goright" prefHeight="105.0" prefWidth="109.0" text="go right" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                      <Button fx:id="btnRight" alignment="CENTER" mnemonicParsing="false" onAction="#goright" prefHeight="120.0" prefWidth="120.0" text="go right" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <effect>
                                                             <InnerShadow height="25.0" radius="12.0" width="25.0" />
                                                          </effect>

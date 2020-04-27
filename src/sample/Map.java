@@ -52,18 +52,17 @@ public class Map {
         enemy7 = new Enemy("gnome",100,item0,100); //move on if gems //weapon3
 
         doors[0] = new Doors(true, false, false, false, 2, 0, 0, 0);
-        doors[1] = new Doors(true, false, false, true, 3, 0, 0, 1);
+        doors[1] = new Doors(false, false, false, true, 3, 0, 0, 1);
         doors[2] = new Doors(false, true, true, true, 0, 4, 6, 2);
         doors[3] = new Doors(false, false, true, false, 0, 0, 3, 0);
-        //doors[4] = new Doors(false, false, false, true, 8, 0, 0, 3);
         doors[4] = new Doors(false, false, false, true, 8, 0, 0, 6);
-        doors[5] = new Doors(true, true, true, false, 5, 3, 7, 0);
+        doors[5] = new Doors(false, true, false, false, 5, 3, 7, 0);
         doors[6] = new Doors(false, true, false, false, 0, 6, 0, 0);
-        doors[7] = new Doors(true, true, true,true, 10, 9, 11, 5);
+        doors[7] = new Doors(false, false, false,true, 10, 9, 11, 5);
         doors[8] = new Doors(false, true, true, false, 0, 1, 8, 0);
         doors[9] = new Doors(false, false, false, true, 14, 0, 0, 8);
-        doors[10] = new Doors(false, true, true, false, 0, 8, 12, 0);
-        doors[11] = new Doors(false, true, true, false, 0, 11, 13, 0);
+        doors[10] = new Doors(false, true, false, false, 0, 8, 12, 0);
+        doors[11] = new Doors(false, true, false, false, 0, 11, 13, 0);
         doors[12] = new Doors(false, true, false, false, 0, 12, 0, 0);
         doors[13] = new Doors(true, false, false, true, 15, 0, 0, 10);
         doors[14] = new Doors(false, false, false, true, 16, 0, 0, 14);
@@ -76,14 +75,14 @@ public class Map {
         rooms[4] = new Room(5,"blood traces around the door, tracks lead away.\nat the side lays some armor.\n",true, doors[4], enemy0, usableItem3); //find key to move on
         rooms[5] = new Room(6,"giant tree-like creature attacks.\n",false, doors[5], enemy2, item0);
         rooms[6] = new Room(7,"out of nowhere there lies a rubin. (wtf)\n",false, doors[6], enemy0, item1);
-        rooms[7] = new Room(8,"something invisible attacks. nothing but a shadow can be recognized.\n",false, doors[7], enemy3, item0);
-        rooms[8] = new Room(9,"going upstairs...\nnearly stepped on some nasty looking food.\nmaybe eat it?!\n",false, doors[8], enemy0, usableItem4);
-        rooms[9] = new Room(10,"small lizard sits there looking all cute and harmless.\nsuddenly it spits fire! getting hot in here..\n",true, doors[9], enemy6, item0);
+        rooms[7] = new Room(8,"something invisible attacks. only a shadow can be seen.\n",false, doors[7], enemy3, item0);
+        rooms[8] = new Room(9,"nearly stepped on some nasty looking food.\nmaybe eat it?!\n",false, doors[8], enemy0, usableItem4);
+        rooms[9] = new Room(10,"small lizard sits there looking all cute and harmless.\nsuddenly it spits fire!\n",true, doors[9], enemy6, item0);
         rooms[10] = new Room(11,"gnarling wolf attacks.\n",false, doors[10], enemy4, item0);
-        rooms[11] = new Room(12,"another wolf attacks looking all angry and injured.\n",false, doors[11], enemy5, item0);
-        rooms[12] = new Room(13,"plugged in a human skull finding a sapphire.\n",false, doors[12], enemy0, item2);
+        rooms[11] = new Room(12,"another wolf attacks looking all angry.\n",false, doors[11], enemy5, item0);
+        rooms[12] = new Room(13,"plugged in a human skull you find a sapphire.\n",false, doors[12], enemy0, item2);
         rooms[13] = new Room(14,"just as needed some more food.\nsomehow looks like already eaten before.\n",false, doors[13], enemy0, usableItem4);
-        rooms[14] = new Room(15,"ugly gnome blocking the way.\nclueless which language he's speaking\nbut it looks like he wants something.\n",true, doors[14], enemy7, item0);
+        rooms[14] = new Room(15,"ugly gnome blocks the way, speaking in a foreign language.\nbut it looks like he wants something.\n",true, doors[14], enemy7, item0);
         rooms[15] = new Room(16,"YOU WON! FREE TO GO NOW...\n",false,doors[15],enemy0,item0);
 
         currentRoom = rooms[0];

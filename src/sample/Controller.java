@@ -45,7 +45,7 @@ public class Controller {
     public Label lblR13;
     public Label lblR14;
     public Label lblR15;
-    public Label[] mapLabels = new Label[15];   //array for mini-map on the side
+    public Label[] mapLabels = new Label[16];   //array for mini-map on the side
 
     private Character character;
     private Map map = new Map();
@@ -56,7 +56,7 @@ public class Controller {
         map.CreateMap();
         character = new Character(20, map.weapon0,2);
         lblCurrentArmor.setText("");
-        txtAreaStory.setText("You wake up. Dizzy and shivering.\n");
+        txtAreaStory.setText("you wake up. dizzy and shivering.\n");
         txtAreaStory.appendText(String.valueOf(map.currentRoom));
         mapLabels[0] = lblR1;   //fill array for mini-map on the side
         mapLabels[1] = lblR2;
@@ -86,7 +86,6 @@ public class Controller {
             lblCurrentRoom.setText("Room: " + map.currentRoom.getNumber());
             lblnewItem.setText(String.valueOf(map.currentRoom.item));
             lblCurrentEnemy.setText(String.valueOf(map.currentRoom.enemy));
-            //txtAreaStory.appendText(map.currentRoom + "\n");
             mapLabels[map.currentRoom.getNumber() - 1].setText("@");
             mapLabels[map.currentRoom.getNumber() - 1].setTextFill(Color.RED);
         }
@@ -94,10 +93,13 @@ public class Controller {
 
     public void moveon(ActionEvent actionEvent) {
         if(map.currentRoom.doors.isTop()) {
-            txtAreaStory.appendText("You move on.\n\n");
+            txtAreaStory.appendText("you move on.\n\n");
             switch(map.currentRoom.doors.getRoomTop()) {
                 case 3: //water
                     map.rooms[map.currentRoom.doors.getRoomTop()-1].setItem(map.usableItem2);
+                    break;
+                case 8:
+                    txtAreaStory.appendText("going upstairs...\n");
                     break;
                 case 9: //food
                 case 14:
@@ -124,10 +126,10 @@ public class Controller {
 
     public void goleft(ActionEvent actionEvent) {
         if(map.currentRoom.doors.isLeft()) {
-            txtAreaStory.appendText("You go left.\n\n");
+            txtAreaStory.appendText("you go left.\n\n");
             switch (map.currentRoom.doors.getRoomLeft()) {
                 case 1: //trap door
-                    txtAreaStory.appendText("It's a trap (door)!\nYou fall deep and hit the ground amidst a puddle of blood.\n");
+                    txtAreaStory.appendText("it's a trap (door)!\nyou fall deep and hit the ground amidst a puddle of blood.\n");
                     character.setHp(character.getHp() - 6);
                     //if (character.getHp() == 0) gameover();
                     break;
@@ -154,10 +156,13 @@ public class Controller {
 
     public void goback(ActionEvent actionEvent) {
         if(map.currentRoom.doors.isBottom()) {
-            txtAreaStory.appendText("You go back.\n\n");
+            txtAreaStory.appendText("you go back.\n\n");
             switch (map.currentRoom.doors.getRoomBottom()) {
                 case 3: //water
                     map.rooms[map.currentRoom.doors.getRoomBottom()-1].setItem(map.usableItem2);
+                    break;
+                case 5:
+                    txtAreaStory.appendText("going downstairs...\n");
                     break;
                 case 9: //food
                 case 14:
@@ -184,7 +189,7 @@ public class Controller {
 
     public void goright(ActionEvent actionEvent) {
         if(map.currentRoom.doors.isRight()) {
-            txtAreaStory.appendText("You go right.\n\n");
+            txtAreaStory.appendText("you go right.\n\n");
             switch (map.currentRoom.doors.getRoomRight()) {
                 case 3: //water
                     map.rooms[map.currentRoom.doors.getRoomRight()-1].setItem((map.usableItem2));
@@ -222,9 +227,13 @@ public class Controller {
             character.setHp(map.currentRoom.enemy.Fight(character.getHp()));
             map.currentRoom.enemy.setHp(character.Fight(map.currentRoom.enemy.getHp()));
             if (map.currentRoom.enemy.hp == 0) {
-                txtAreaStory.appendText("You killed the beast!\nIt dropped something useful.\n\n");
+                if (map.currentRoom.doors.getRoomRight() != 0) map.currentRoom.doors.setRight(true);
+                if (map.currentRoom.doors.getRoomTop() != 0) map.currentRoom.doors.setTop(true);
+                if (map.currentRoom.doors.getRoomLeft() != 0) map.currentRoom.doors.setLeft(true);
+                if (map.currentRoom.doors.getRoomBottom() != 0) map.currentRoom.doors.setBottom(true);
+                txtAreaStory.appendText("you killed the beast!\nit dropped something useful.\n\n");
                 map.currentRoom.setItem(map.currentRoom.enemy.getItem());
-                map.currentRoom.setDescription("Nothing but an empty room.\n");
+                map.currentRoom.setDescription("nothing but an empty room.\n");
                 map.currentRoom.setEnemy(map.enemy0);
             }
         }
@@ -258,7 +267,7 @@ public class Controller {
                     lstItems.getItems().remove(selectIndex);
                     txtAreaStory.appendText("those wrinkled eyes get wide and he nods excitedly.\n\n");
                     if (counterGems == 3) {
-                        txtAreaStory.appendText("the gnome leaves. The door to freedom stands open.\n\n"); //and drops something useful.\n\n");
+                        txtAreaStory.appendText("the gnome leaves. The door to freedom stands open...\n\n"); //and drops something useful.\n\n");
                         //map.currentRoom.setItem(map.currentRoom.enemy.getItem());
                         map.currentRoom.setDescription("nothing but an empty room.\n\n");
                         map.currentRoom.setEnemy(map.enemy0);
