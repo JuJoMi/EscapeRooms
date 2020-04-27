@@ -3,6 +3,7 @@ package sample;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -46,6 +47,8 @@ public class Controller {
     public Label lblR14;
     public Label lblR15;
     public Label[] mapLabels = new Label[16];   //array for mini-map on the side
+    public ImageView dungeon;
+    public Button btnStartGame;
 
     private Character character;
     private Map map = new Map();
@@ -74,6 +77,17 @@ public class Controller {
         mapLabels[13] = lblR14;
         mapLabels[14] = lblR15;
         updateStatus();
+    }
+
+    public void startGame(ActionEvent actionEvent) {
+        FadeTransition t = new FadeTransition(new Duration(6000), dungeon);
+        t.setFromValue(1);
+        t.setToValue(0.25);
+        t.play();
+
+        dungeon.setDisable(true);
+        btnStartGame.setDisable(true);
+        btnStartGame.setOpacity(0);
     }
 
     private void updateStatus() {

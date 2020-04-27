@@ -5,6 +5,7 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="435.0" prefWidth="871.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <!--<columnConstraints>
@@ -26,7 +27,7 @@
          <children>
             <ImageView fitHeight="900.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/gameover.jpg"/>
+                  <Image url="@../images/gameover.jpg" />
                </image>
             </ImageView>
             <SplitPane fx:id="gamepad" dividerPositions="0.3866513233601841" prefHeight="435.0" prefWidth="871.0">
@@ -239,6 +240,16 @@
                   </AnchorPane>
               </items>
             </SplitPane>
+            <ImageView fx:id="dungeon" fitHeight="900.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/dungeon.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnStartGame" mnemonicParsing="false" onAction="#startGame" text="START" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
          </children>
       </StackPane>
    </children>
