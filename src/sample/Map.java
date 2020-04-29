@@ -45,9 +45,9 @@ public class Map {
         enemy0 = new Enemy("",0,item0,0); //dummy
         enemy1 = new Enemy("spider",10,weapon1,2);
         enemy2 = new Enemy("tree creature",15,weapon2,4);
-        enemy3 = new Enemy("invisible",30,item3,4);
-        enemy4 = new Enemy("wolf",30,usableItem3,6);
-        enemy5 = new Enemy("wolf",30,usableItem1,6);
+        enemy3 = new Enemy("invisible",40,item3,4);
+        enemy4 = new Enemy("wolf",50,usableItem3,6);
+        enemy5 = new Enemy("angry wolf",60,usableItem1,6);
         enemy6 = new Enemy("lizard",5,usableItem3,2);
         enemy7 = new Enemy("gnome",100,item0,100); //move on if gems //weapon3
 

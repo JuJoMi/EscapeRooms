@@ -8,6 +8,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.awt.font.ImageGraphicAttribute;
+
 public class Controller {
     public SplitPane gamepad;                   //Gamepad
     public Button btnMoveOn;                    //Movement
@@ -48,23 +50,30 @@ public class Controller {
     public Label lblR14;
     public Label lblR15;
     public Label[] mapLabels = new Label[15];   //array for mini-map on the side
-    public ImageView dungeon;
     public Button btnStartGame;
     public Button btnNewGame;
     public VBox vboxMenu;
+    public ImageView igameover;
+    public ImageView iexit;
+    public ImageView idungeon;
+    public ImageView ivSword;
+    public ImageView ivArmor;
+    public ImageView ivKey;
 
     private Character character;
     private Map map = new Map();
     //private Inventory inventory;  //no use yet
-    private int counterGems = 0;    //3 needed to end game
+    private int counterGems;    //3 needed to end game
 
     public void initialize() { //executed when program started
         map.CreateMap();
         character = new Character(20, map.weapon0,2);
+        counterGems = 0;
         lblCurrentArmor.setText("");
         txtAreaStory.setText("you wake up. dizzy and shivering.\n");
         txtAreaStory.appendText(String.valueOf(map.currentRoom));
-        mapLabels[0] = lblR1;   //fill array for mini-map on the side
+        //fill array for mini-map on the side
+        mapLabels[0] = lblR1;
         mapLabels[1] = lblR2;
         mapLabels[2] = lblR3;
         mapLabels[3] = lblR4;
@@ -79,19 +88,45 @@ public class Controller {
         mapLabels[12] = lblR13;
         mapLabels[13] = lblR14;
         mapLabels[14] = lblR15;
+        //set up elements
+        gamepad.setVisible(true);
+        gamepad.setDisable(false);
+        gamepad.setOpacity(1);
+        idungeon.setDisable(true);  //opacity 0.25
+        igameover.setDisable(true);
+        igameover.setOpacity(0);
+        iexit.setDisable(true);
+        iexit.setOpacity(0);
+        ivSword.setOpacity(0);
+        ivArmor.setOpacity(0);
+        ivKey.setOpacity(0);
         updateStatus();
     }
 
     public void startGame(ActionEvent actionEvent) {
-        FadeTransition t = new FadeTransition(new Duration(6000), dungeon);
+        FadeTransition t = new FadeTransition(new Duration(6000), idungeon);
         t.setFromValue(1);
         t.setToValue(0.25);
         t.play();
-
-        dungeon.setDisable(true);
+        //disable elements
+        vboxMenu.setDisable(true);
         btnStartGame.setDisable(true);
         btnStartGame.setOpacity(0);
+    }
+
+    public void newGame(ActionEvent actionEvent) {
+        //delete mini map
+        for (int i = 0; i <= 14; i++) {
+            mapLabels[i].setText("");
+            mapLabels[i].setTextFill(Color.BLACK);
+        }
+        //delete inventory
+        lstItems.getItems().clear();
+        //disable elements
         vboxMenu.setDisable(true);
+        btnNewGame.setDisable(true);
+        btnNewGame.setOpacity(0);
+        initialize();
     }
 
     private void updateStatus() {
@@ -129,6 +164,18 @@ public class Controller {
                     map.rooms[map.currentRoom.doors.getRoomTop()-1].setEnemy(map.enemy6);
                     character.setHp(map.rooms[map.currentRoom.doors.getRoomTop()-1].enemy.Fight(character.getHp()));
                     //if(character.getHp() == 0) gameover();
+                    break;
+                case 16:
+                    //exit
+                    FadeTransition t = new FadeTransition(new Duration(2000), iexit);
+                    t.setFromValue(0);
+                    t.setToValue(1);
+                    t.play();
+
+                    gamepad.setVisible(false);
+                    vboxMenu.setDisable(false);
+                    btnNewGame.setDisable(false);
+                    btnNewGame.setOpacity(1);
                     break;
                 default:
                     break;
@@ -191,7 +238,6 @@ public class Controller {
                 case 10: //lizard
                     map.rooms[map.currentRoom.doors.getRoomBottom()-1].setEnemy(map.enemy6);
                     character.setHp(map.rooms[map.currentRoom.doors.getRoomBottom()-1].enemy.Fight(character.getHp()));
-                    //if (character.getHp() == 0) gameover();
                     break;
                 default:
                     break;
@@ -278,6 +324,7 @@ public class Controller {
                     } else if (map.currentRoom.doors.getRoomBottom() != 0) {
                         map.currentRoom.doors.setBottom(true);
                     }
+                    ivKey.setOpacity(0);
                     txtAreaStory.appendText("door is unlocked now.\n\n");
                     lstItems.getItems().remove(selectIndex);
                 }
@@ -305,6 +352,7 @@ public class Controller {
                 else if (selectItem.equals(map.usableItem3)) {
                     character.setMaxHP(character.getMaxHP() + selectItem.getValue());
                     character.setHp(character.getMaxHP());
+                    ivArmor.setOpacity(1);
                     lblCurrentArmor.setText(String.valueOf(selectItem));
                     map.currentRoom.setDescription("nothing but an empty room.\n\n");
                     updateStatus();
@@ -314,6 +362,7 @@ public class Controller {
                 else if (selectItem.equals(map.weapon1) || selectItem.equals(map.weapon2)) { // || selectItem.equals(weapon3)) {
                     character.setDamage(selectItem.value);
                     character.setWeapon((Weapon)selectItem);
+                    ivSword.setOpacity(1);
                     updateStatus();
                     lstItems.getItems().remove(selectIndex);
                 } else {
@@ -329,35 +378,29 @@ public class Controller {
         if (map.currentRoom.getItem() != map.item0) {
             //add item to list
             lstItems.getItems().add(map.currentRoom.getItem());
+            //key icon visible
+            if (map.currentRoom.getItem() == map.usableItem1) {
+                ivKey.setOpacity(1);
+            }
             //delete item from room
             map.currentRoom.setItem(map.item0);
+            //map.currentRoom.setDescription("nothing but an empty room.\n");
             updateStatus();
         } else {
             txtAreaStory.appendText("there is nothing you should take with you.\n\n");
         }
     }
     public void gameover() {
-        FadeTransition t = new FadeTransition(new Duration(1000), gamepad);
-        t.setFromValue(1);
-        t.setToValue(0);
+        FadeTransition t = new FadeTransition(new Duration(1000), igameover);
+        t.setFromValue(0);
+        t.setToValue(1);
         t.play();
 
+        gamepad.setVisible(false);
         gamepad.setDisable(true);
         vboxMenu.setDisable(false);
         btnNewGame.setDisable(false);
         btnNewGame.setOpacity(1);
     }
 
-    public void newGame(ActionEvent actionEvent) {
-        for (int i = 0; i <= 14; i++) {
-            mapLabels[i].setText("");
-            mapLabels[i].setTextFill(Color.BLACK);
-        }
-        gamepad.setDisable(false);
-        gamepad.setOpacity(1);
-        vboxMenu.setDisable(true);
-        btnNewGame.setDisable(true);
-        btnNewGame.setOpacity(0);
-        initialize();
-    }
 }
