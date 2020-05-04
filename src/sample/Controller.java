@@ -22,7 +22,6 @@ public class Controller {
     public TextField txtInterface;              //no use yet
     public Label lblHP;                         //Labels
     public Label lblDamage;
-    public Label lblWeapon;
     public Label lblItems;
     public Label lblnewItem;                    //Values
     public Label lblCurrentEnemy;
@@ -32,9 +31,9 @@ public class Controller {
     public Label lblCurrentWeapon;
     public Label lblCurrentDamage;
     public Label lblCurrentArmor;
-    public TextArea txtAreaStory;               //Story
-    public ListView<Item> lstItems;             //Inventory //no use yet
-    public Label lblR1;                         //Map
+    public TextArea txtAreaStory;               //Storyboard
+    public ListView<Item> lstItems;             //Inventory
+    public Label lblR1;                         //mini-map
     public Label lblR2;
     public Label lblR3;
     public Label lblR4;
@@ -50,19 +49,18 @@ public class Controller {
     public Label lblR14;
     public Label lblR15;
     public Label[] mapLabels = new Label[15];   //array for mini-map on the side
+    public VBox vboxMenu;
     public Button btnStartGame;
     public Button btnNewGame;
-    public VBox vboxMenu;
-    public ImageView igameover;
+    public ImageView igameover;                 //imageviews gamestate
     public ImageView iexit;
     public ImageView idungeon;
-    public ImageView ivSword;
+    public ImageView ivSword;                   //imageviews items
     public ImageView ivArmor;
     public ImageView ivKey;
 
     private Character character;
     private Map map = new Map();
-    //private Inventory inventory;  //no use yet
     private int counterGems;    //3 needed to end game
 
     public void initialize() { //executed when program started
@@ -126,6 +124,7 @@ public class Controller {
         vboxMenu.setDisable(true);
         btnNewGame.setDisable(true);
         btnNewGame.setOpacity(0);
+        idungeon.setOpacity(0.25);
         initialize();
     }
 
@@ -154,7 +153,7 @@ public class Controller {
                     map.rooms[map.currentRoom.doors.getRoomTop()-1].setItem(map.usableItem2);
                     break;
                 case 8:
-                    txtAreaStory.appendText("going upstairs...\n");
+                    txtAreaStory.appendText("you're going upstairs...\n");
                     break;
                 case 9: //food
                 case 14:
@@ -163,7 +162,6 @@ public class Controller {
                 case 10: //lizard
                     map.rooms[map.currentRoom.doors.getRoomTop()-1].setEnemy(map.enemy6);
                     character.setHp(map.rooms[map.currentRoom.doors.getRoomTop()-1].enemy.Fight(character.getHp()));
-                    //if(character.getHp() == 0) gameover();
                     break;
                 case 16:
                     //exit
@@ -176,6 +174,7 @@ public class Controller {
                     vboxMenu.setDisable(false);
                     btnNewGame.setDisable(false);
                     btnNewGame.setOpacity(1);
+                    idungeon.setOpacity(0);
                     break;
                 default:
                     break;
@@ -198,7 +197,6 @@ public class Controller {
                 case 1: //trap door
                     txtAreaStory.appendText("it's a trap (door)!\nyou fall deep and hit the ground amidst a puddle of blood.\n");
                     character.setHp(character.getHp() - 6);
-                    //if (character.getHp() == 0) gameover();
                     break;
                 case 3: //water
                     map.rooms[map.currentRoom.doors.getRoomLeft()-1].setItem(map.usableItem2);
@@ -299,7 +297,7 @@ public class Controller {
                 if (map.currentRoom.doors.getRoomBottom() != 0) map.currentRoom.doors.setBottom(true);
                 txtAreaStory.appendText("you killed the beast!\nit dropped something useful.\n\n");
                 map.currentRoom.setItem(map.currentRoom.enemy.getItem());
-                map.currentRoom.setDescription("nothing but an empty room.\n");
+                map.currentRoom.setDescription("maybe collect the " + map.currentRoom.item + "?!\n");
                 map.currentRoom.setEnemy(map.enemy0);
             }
         }
@@ -334,9 +332,8 @@ public class Controller {
                     lstItems.getItems().remove(selectIndex);
                     txtAreaStory.appendText("those wrinkled eyes get wide and he nods excitedly.\n\n");
                     if (counterGems == 3) {
-                        txtAreaStory.appendText("the gnome leaves. The door to freedom stands open...\n\n"); //and drops something useful.\n\n");
-                        //map.currentRoom.setItem(map.currentRoom.enemy.getItem());
-                        map.currentRoom.setDescription("nothing but an empty room.\n\n");
+                        txtAreaStory.appendText("the gnome leaves. The door to freedom stands open...\n\n");
+                        map.currentRoom.setDescription("nothing but an empty room.\n");
                         map.currentRoom.setEnemy(map.enemy0);
                         map.currentRoom.doors.setTop(true);
                         updateStatus();
@@ -354,7 +351,6 @@ public class Controller {
                     character.setHp(character.getMaxHP());
                     ivArmor.setOpacity(1);
                     lblCurrentArmor.setText(String.valueOf(selectItem));
-                    map.currentRoom.setDescription("nothing but an empty room.\n\n");
                     updateStatus();
                     lstItems.getItems().remove(selectIndex);
                 }
@@ -381,10 +377,13 @@ public class Controller {
             //key icon visible
             if (map.currentRoom.getItem() == map.usableItem1) {
                 ivKey.setOpacity(1);
+                //map.currentRoom.setDescription("nothing but an empty room.\n");
             }
             //delete item from room
+            if (map.currentRoom.getItem() != map.usableItem2 && map.currentRoom.getItem() != map.usableItem4) {
+                map.currentRoom.setDescription("nothing but an empty room.\n");
+            }
             map.currentRoom.setItem(map.item0);
-            //map.currentRoom.setDescription("nothing but an empty room.\n");
             updateStatus();
         } else {
             txtAreaStory.appendText("there is nothing you should take with you.\n\n");

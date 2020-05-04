@@ -26,9 +26,14 @@
    <children>
       <StackPane prefHeight="491.2" prefWidth="873.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="1000.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="igameover" fitHeight="1000.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/gameover.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="iexit" fitHeight="1000.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/exit.jpg" />
                </image>
             </ImageView>
             <SplitPane fx:id="gamepad" dividerPositions="0.3866513233601841" prefHeight="435.0" prefWidth="871.0">
@@ -118,10 +123,10 @@
                                                       </Group>
                                                       <Label fx:id="lblDamage" text="Damage:" GridPane.rowIndex="1" />
                                                       <Label fx:id="lblCurrentDamage" text="damage" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                      <Label fx:id="lblWeapon" text="Weapon:" GridPane.rowIndex="2" />
+                                                      <!--><Label fx:id="lblWeapon" text="Weapon:" GridPane.rowIndex="2" />-->
                                                       <Group GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                          <children>
-                                                            <ImageView fx:id="ivSword" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                                            <ImageView fx:id="ivSword" fitHeight="30.0" fitWidth="40.0" opacity="0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
                                                                   <Image url="@../images/sword.jpg" />
                                                                </image>
@@ -131,7 +136,7 @@
                                                       </Group>
                                                       <Group GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <children>
-                                                            <ImageView fx:id="ivArmor" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                                            <ImageView fx:id="ivArmor" fitHeight="30.0" fitWidth="40.0" opacity="0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
                                                                   <Image url="@../images/armor.png" />
                                                                </image>
@@ -139,6 +144,11 @@
                                                             <Label fx:id="lblCurrentArmor" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="30.0" prefWidth="87.0" text="armor" textAlignment="RIGHT" wrapText="true" />
                                                          </children>
                                                       </Group>
+                                                      <ImageView fx:id="ivKey" fitHeight="30.0" fitWidth="40.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                           <image>
+                                                               <Image url="@../images/key.jpg" />
+                                                           </image>
+                                                      </ImageView>
                                                       <Group GridPane.columnIndex="3">
                                                          <children>
                                                             <Label fx:id="lblItems" layoutY="3.999999523162842" text="Items:" />
@@ -241,7 +251,7 @@
                   </AnchorPane>
               </items>
             </SplitPane>
-            <ImageView fx:id="dungeon" fitHeight="1000.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="idungeon" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/dungeon.jpg" />
                </image>

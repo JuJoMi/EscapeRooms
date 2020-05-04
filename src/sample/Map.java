@@ -68,22 +68,22 @@ public class Map {
         doors[14] = new Doors(false, false, false, true, 16, 0, 0, 14);
         doors[15] = new Doors(false, false, false, true,0,0,0,15);
 
-        rooms[0] = new Room(1,"empty room, cold and bloody.\n",false, doors[0], enemy0, item0);
-        rooms[1] = new Room(2,"hugh hairy spider attacks.\n",false, doors[1], enemy1, item0);
-        rooms[2] = new Room(3,"table has milky glass with some fluid.\nmaybe drink it?!\n",false, doors[2], enemy0, usableItem2);
+        rooms[0] = new Room(1,"it's an empty room, cold and bloody.\n",false, doors[0], enemy0, item0);
+        rooms[1] = new Room(2,"a hugh hairy spider attacks.\n",false, doors[1], enemy1, item0);
+        rooms[2] = new Room(3,"at the side stands a table.\nit has a milky glass on top, filled with some fluid.\nmaybe drink it?!\n",false, doors[2], enemy0, usableItem2);
         rooms[3] = new Room(4,"under some weird looking bones in a corner lays a key.\n",false, doors[3],enemy0, usableItem1);
         rooms[4] = new Room(5,"blood traces around the door, tracks lead away.\nat the side lays some armor.\n",true, doors[4], enemy0, usableItem3); //find key to move on
-        rooms[5] = new Room(6,"giant tree-like creature attacks.\n",false, doors[5], enemy2, item0);
-        rooms[6] = new Room(7,"out of nowhere there lies a rubin. (wtf)\n",false, doors[6], enemy0, item1);
+        rooms[5] = new Room(6,"a giant tree-like creature attacks.\n",false, doors[5], enemy2, item0);
+        rooms[6] = new Room(7,"you search a barrel and find a rubin.\n",false, doors[6], enemy0, item1);
         rooms[7] = new Room(8,"something invisible attacks. only a shadow can be seen.\n",false, doors[7], enemy3, item0);
-        rooms[8] = new Room(9,"nearly stepped on some nasty looking food.\nmaybe eat it?!\n",false, doors[8], enemy0, usableItem4);
-        rooms[9] = new Room(10,"small lizard sits there looking all cute and harmless.\nsuddenly it spits fire!\n",true, doors[9], enemy6, item0);
-        rooms[10] = new Room(11,"gnarling wolf attacks.\n",false, doors[10], enemy4, item0);
+        rooms[8] = new Room(9,"you nearly stepped on some nasty looking food.\nmaybe eat it anyways?!\n",false, doors[8], enemy0, usableItem4);
+        rooms[9] = new Room(10,"a small lizard sits there looking all cute and harmless.\nsuddenly it spits fire!\n",true, doors[9], enemy6, item0);
+        rooms[10] = new Room(11,"a gnarling wolf attacks.\n",false, doors[10], enemy4, item0);
         rooms[11] = new Room(12,"another wolf attacks looking all angry.\n",false, doors[11], enemy5, item0);
         rooms[12] = new Room(13,"plugged in a human skull you find a sapphire.\n",false, doors[12], enemy0, item2);
-        rooms[13] = new Room(14,"just as needed some more food.\nsomehow looks like already eaten before.\n",false, doors[13], enemy0, usableItem4);
-        rooms[14] = new Room(15,"ugly gnome blocks the way, speaking in a foreign language.\nbut it looks like he wants something.\n",true, doors[14], enemy7, item0);
-        rooms[15] = new Room(16,"YOU WON! FREE TO GO NOW...\n",false,doors[15],enemy0,item0);
+        rooms[13] = new Room(14,"just as needed some more leftover food.\n",false, doors[13], enemy0, usableItem4);
+        rooms[14] = new Room(15,"an ugly gnome blocks the way, speaking in a foreign language.\nbut it looks like he wants something...\n",true, doors[14], enemy7, item0);
+        rooms[15] = new Room(16,"YOU WON! YOU'RE FREE TO GO NOW...\n",false,doors[15],enemy0,item0);
 
         currentRoom = rooms[0];
     }
